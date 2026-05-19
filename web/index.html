@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>GitHub Treasure</title>
+  <link rel="stylesheet" href="styles.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=Outfit:wght@400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body data-theme="dark">
+  <!-- Background -->
+  <div class="bg">
+    <div class="bg-grid"></div>
+  </div>
+
+  <!-- Theme Toggle -->
+  <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme">
+    <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+      <circle cx="12" cy="12" r="5"/>
+      <path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/>
+    </svg>
+    <svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+      <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
+    </svg>
+  </button>
+
+  <header class="header">
+    <div class="header-inner">
+      <div class="badge">
+        <svg width="8" height="8" viewBox="0 0 8 8" fill="currentColor">
+          <circle cx="4" cy="4" r="4"/>
+        </svg>
+        <span>TREASURE</span>
+      </div>
+      <h1 class="title">GitHub <span class="title-muted">宝藏仓库</span></h1>
+      <p class="subtitle">发现 2026 年优质项目 · 多维度智能筛选</p>
+    </div>
+  </header>
+
+  <main class="main">
+    <!-- Filters Panel -->
+    <div class="filters-panel">
+      <div class="filters-main">
+        <div class="search-wrap">
+          <svg class="search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="11" cy="11" r="8"/>
+            <path d="M21 21l-4.35-4.35"/>
+          </svg>
+          <input type="text" id="searchInput" placeholder="搜索项目名称或描述...">
+        </div>
+
+        <div class="filter-group">
+          <label>语言</label>
+          <select id="languageFilter">
+            <option value="">全部</option>
+          </select>
+        </div>
+
+        <div class="filter-group">
+          <label>排序</label>
+          <select id="sortFilter">
+            <option value="score">综合评分</option>
+            <option value="stars">Stars</option>
+            <option value="forks">Forks</option>
+            <option value="today">今日增长</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="filters-range">
+        <div class="range-item">
+          <label>Stars ≥ <span id="starsValue">0</span></label>
+          <input type="range" id="starsRange" min="0" max="50000" step="1000" value="0">
+        </div>
+        <div class="range-item">
+          <label>Forks ≥ <span id="forksValue">0</span></label>
+          <input type="range" id="forksRange" min="0" max="5000" step="100" value="0">
+        </div>
+        <div class="range-item">
+          <label>评分 ≥ <span id="scoreValue">0</span></label>
+          <input type="range" id="scoreRange" min="0" max="200000" step="5000" value="0">
+        </div>
+        <button class="reset-btn" id="resetFilters">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/>
+            <path d="M3 3v5h5"/>
+          </svg>
+          重置
+        </button>
+      </div>
+    </div>
+
+    <!-- Stats Bar -->
+    <div class="stats-bar">
+      <div class="stat">
+        <span class="stat-value" id="repoCount">0</span>
+        <span class="stat-label">个项目</span>
+      </div>
+      <div class="stat-div"></div>
+      <div class="stat">
+        <span class="stat-value" id="totalStars">0</span>
+        <span class="stat-label">总 Stars</span>
+      </div>
+      <div class="stat-div"></div>
+      <div class="stat">
+        <span class="stat-value" id="langCount">0</span>
+        <span class="stat-label">种语言</span>
+      </div>
+      <div class="stat-div"></div>
+      <div class="stat">
+        <span class="stat-value stat-date" id="lastUpdated">-</span>
+        <span class="stat-label">数据更新</span>
+      </div>
+    </div>
+
+    <!-- Repo Grid -->
+    <div class="repo-grid" id="repoGrid">
+      <div class="loading">
+        <div class="spinner"></div>
+      </div>
+    </div>
+  </main>
+
+  <footer class="footer">
+    <p>评分算法 · Stars + Fork率 + 增长加速度</p>
+  </footer>
+
+  <script src="app.js"></script>
+</body>
+</html>
