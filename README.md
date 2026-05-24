@@ -1,21 +1,27 @@
 # GitHub Treasure Repo
 
-全自动抓取 GitHub Trending 优质项目的开源工具，通过专业评分体系筛选宝藏 repo。
+全自动聚合 GitHub 优质项目的开源工具，整合 Awesome 榜单 + API 搜索 + Trending 多源数据。
 
 ## 核心特性
 
-- **多维度采集**: daily / weekly / monthly 三种时间维度 × 14 种主流语言
+- **多源聚合**: Awesome Lists + GitHub API + Trending HTML
 - **专业评分**: Stars + Fork率 + 增长加速度 综合评分
-- **质量门槛**: stars ≥ 1000, forks ≥ 10
+- **多维度筛选**: 语言 / Stars / Forks / 评分范围筛选
+- **暗夜/白天模式**: 一键切换，本地存储记忆
 - **自动更新**: 每月 1 日 GitHub Actions 自动抓取 + 支持手动触发
-- **Web UI**: 深色主题卡片展示，支持搜索/筛选/排序
+
+## 数据来源
+
+| 来源 | 描述 |
+|------|------|
+| **Awesome Lists** | vinta/awesome-python, avelino/awesome-go 等经典列表 |
+| **GitHub API** | 2026 年创建的热门项目搜索 |
+| **Trending** | 当日/周/月热门项目 |
 
 ## 评分标准
 
 ```
-综合得分 = Stars + (Fork数/Stars数 × 1000) + 今日增长 × 时间权重
-
-时间权重: daily=30, weekly=4, monthly=1
+综合得分 = Stars + Forks + (Fork数/Stars数 × 1000) + 今日增长 × 10
 ```
 
 ## 项目结构
@@ -23,7 +29,7 @@
 ```
 repo-hoarder/
 ├── scripts/
-│   └── scrape.py          # 爬虫脚本
+│   └── scrape.py          # 多源聚合爬虫
 ├── data/
 │   └── repos.json         # 抓取的数据
 ├── web/
@@ -43,11 +49,8 @@ repo-hoarder/
 # 安装依赖
 pip install -r requirements.txt
 
-# 抓取数据（全量）
+# 抓取数据（多源聚合）
 python3 scripts/scrape.py
-
-# 快速抓取（仅当日 trending）
-python3 scripts/scrape.py --quick
 
 # 预览 Web UI
 cd web && python3 -m http.server 8000
@@ -61,11 +64,13 @@ cd web && python3 -m http.server 8000
 
 ## 数据示例
 
-| 排名 | Repo | Stars | Forks | 评分 |
-|------|------|-------|-------|------|
-| 1 | flutter/flutter | 176k | 30k | 176,527 |
-| 2 | ollama/ollama | 172k | 16k | 171,771 |
-| 3 | NousResearch/hermes-agent | 156k | 25k | 155,963 |
+| 排名 | Repo | 语言 | Stars |
+|------|------|------|-------|
+| 1 | ultraworkers/claw-code | Rust | 192k |
+| 2 | affaan-m/ECC | JavaScript | 187k |
+| 3 | NousResearch/hermes-agent | Python | 157k |
+| 4 | multica-ai/andrej-karpathy-skills | - | 137k |
+| 5 | ggml-org/llama.cpp | C++ | 111k |
 
 ## License
 
